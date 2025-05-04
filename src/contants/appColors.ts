@@ -16,6 +16,7 @@ export const appColors = {
     placeholder: '#8E8E93',       // Màu chữ gợi ý trong input
     gray: '#807A7A',            // Màu xám trung bình (dùng cho chữ phụ hoặc nền)
     gray2: '#DADADA',          // Màu xám nhạt (dùng cho nền hoặc chữ phụ)
+    link: '#5669FF',          // Màu xám nhạt (dùng cho nền hoặc chữ phụ)
 
     // === Mở rộng ===
     lightGray: '#D1D1D6',         // Xám nhạt - nền nhẹ
