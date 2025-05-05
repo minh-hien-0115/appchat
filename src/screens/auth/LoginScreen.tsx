@@ -1,6 +1,6 @@
 import {ArrowRight, Lock, Sms} from 'iconsax-react-nativejs';
 import React, {useState} from 'react';
-import {Image, Switch, View} from 'react-native';
+import {Alert, Image, Switch, View} from 'react-native';
 import {
   ButtonComponents,
   ContainerComponents,
@@ -15,22 +15,37 @@ import {globalStyles} from '../../styles/globalStyles';
 import {fontFamilies} from '../../contants/fontFamilies';
 import SocialLogin from './Component/SocialLogin';
 import authenticationAPI from '../../api/authApi';
+import {Validate} from '../../utils/Validate';
+import { useDispatch } from 'react-redux';
+import { addAuth } from '../../redux/reducers/authReducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
-
-  const handleLogin = async () => {
-    const api = 'http://192.168.1.6:3001/hello';
-
-    try {
-      const res = await authenticationAPI.HandleAuthentication('/hello');
-      console.log(res);
-    } catch (error) {
-      console.log(error);
+  const dispatch = useDispatch()
+  
+  const handleLogin = async () => {  
+    const emailValidation = Validate.email(email);
+    
+    if (emailValidation) {
+        try {
+        const res = await authenticationAPI.HandleAuthentication(
+          '/login',
+          {email, password},
+          'post',
+        );
+        dispatch(addAuth(res.data))
+        await AsyncStorage.setItem('auth', isRemember ? JSON.stringify(res.data) : email)
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Alert.alert('Email không hợp lệ')
     }
-  }
+    
+  };
 
   return (
     <ContainerComponents isImagesBackgournd isScroll>
@@ -76,25 +91,38 @@ const LoginScreen = ({navigation}: any) => {
             />
             <TextComponents text="Remember me" />
           </RowComponents>
-          <ButtonComponents text="Forgot Password?" type='text' onPress={() => navigation.navigate('ForgotPassword')}/>
+          <ButtonComponents
+            text="Forgot Password?"
+            type="text"
+            onPress={() => navigation.navigate('ForgotPassword')}
+          />
         </RowComponents>
       </SectionComponents>
 
       <SpaceComponents height={16} />
 
       <SectionComponents>
-        <ButtonComponents onPress={handleLogin} text='SIGN IN' type='primary' icon={<ArrowRight size={20} color={appColors.white} />} iconFlex='right' />
+        <ButtonComponents
+          onPress={handleLogin}
+          text="SIGN IN"
+          type="primary"
+          icon={<ArrowRight size={20} color={appColors.white} />}
+          iconFlex="right"
+        />
       </SectionComponents>
 
       <SocialLogin />
 
       <SectionComponents>
-        <RowComponents justify='center'>
+        <RowComponents justify="center">
           <TextComponents text="Don't have an account?  " />
-          <ButtonComponents text="Sign up" type='link' onPress={() => navigation.navigate('SignUpScreen')} />
+          <ButtonComponents
+            text="Sign up"
+            type="link"
+            onPress={() => navigation.navigate('SignUpScreen')}
+          />
         </RowComponents>
       </SectionComponents>
-
     </ContainerComponents>
   );
 };
