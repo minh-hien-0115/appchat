@@ -42,8 +42,8 @@ const ButtonComponents = (props: Props) => {
       <TouchableOpacity onPress={onPress}
       style={[
         globalStyles.button,
-        // globalStyles.shadow,
-        {backgroundColor: color ?? appColors.primary, marginBottom: 17, width: '90%'},
+        globalStyles.shadow,
+        {backgroundColor: color ?? appColors.primary, marginBottom: 17, width: '95%'},
         styles,
       ]}>
       {icon && iconFlex === 'left' && icon}

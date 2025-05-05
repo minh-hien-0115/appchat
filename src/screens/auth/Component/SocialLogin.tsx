@@ -3,6 +3,7 @@ import React from 'react'
 import { ButtonComponents, SectionComponents, SpaceComponents, TextComponents } from '../../../components'
 import { appColors } from '../../../contants/appColors'
 import { fontFamilies } from '../../../contants/fontFamilies'
+import { Facebook, Google } from '../../../assets/svg'
 
 const SocialLogin = () => {
   return (
@@ -15,7 +16,7 @@ const SocialLogin = () => {
         font={fontFamilies.medium}
       />
       <SpaceComponents height={16} />
-      {/* <ButtonComponents
+      <ButtonComponents
         type="primary"
         color={appColors.white}
         textColor={appColors.text}
@@ -32,9 +33,9 @@ const SocialLogin = () => {
         textFont={fontFamilies.regular}
         iconFlex="left"
         icon={<Facebook />}
-      /> */}
+      />
     </SectionComponents>
   )
 }
 
-export default SocialLogin
+export default SocialLogin;
