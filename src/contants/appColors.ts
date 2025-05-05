@@ -6,7 +6,7 @@ export const appColors = {
     background: '#F2F2F7',        // Màu nền tổng thể sáng
     text1: '#000000',              // Màu chữ chính (đen)
     text: '#120D26',
-    white: '#FFFFFF',         // Màu chữ sáng (trắng) dùng trên nền tối
+    white: '#fff',         // Màu chữ sáng (trắng) dùng trên nền tối
     border: '#E1E1E1',            // Màu viền hoặc đường ngăn cách
     error: '#FF3B30',             // Màu cảnh báo lỗi
     success: '#4CD964',           // Màu thông báo thành công
@@ -15,7 +15,9 @@ export const appColors = {
     disabled: '#C7C7CC',          // Màu trạng thái vô hiệu hóa
     placeholder: '#8E8E93',       // Màu chữ gợi ý trong input
     gray: '#807A7A',            // Màu xám trung bình (dùng cho chữ phụ hoặc nền)
-    gray2: '#DADADA',          // Màu xám nhạt (dùng cho nền hoặc chữ phụ)
+    gray2: '#DADADA',       // Màu xám nhạt (dùng cho nền hoặc chữ phụ)
+    gray3:'#E4DFDF',        // Màu xám nhạt hơn (dùng cho nền hoặc chữ phụ)
+    gray4:'#9d9898',        // Màu xám nhạt hơn nữa (dùng cho nền hoặc chữ phụ)          
     link: '#5669FF',          // Màu xám nhạt (dùng cho nền hoặc chữ phụ)
 
     // === Mở rộng ===
