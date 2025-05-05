@@ -8,7 +8,6 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
     </Tab.Navigator>
   )
 }

@@ -15,6 +15,9 @@ import {ArrowRight, Lock, Sms, User} from 'iconsax-react-nativejs';
 import {LoadingModal} from '../../modals';
 import authenticationAPI from '../../api/authApi';
 import { Validate } from '../../utils/Validate';
+import { useDispatch } from 'react-redux';
+import { addAuth } from '../../redux/reducers/authReducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initvalue = {
   username: '',
@@ -27,6 +30,7 @@ const SignUpScreen = ({navigation}: any) => {
   const [values, setValues] = useState(initvalue);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if ( values.username|| values.email || values.password || values.confirmPassword) {
@@ -52,37 +56,44 @@ const SignUpScreen = ({navigation}: any) => {
       setIsLoading(true);
       if (!emailValidation) {
         setIsLoading(false);
-        return setErrorMessage('Địa chỉ Email không hợp lệ, !');
+        setErrorMessage('Địa chỉ Email không hợp lệ, !');
       }
       if (!passValidation) {
         setIsLoading(false);
-        return setErrorMessage(
+        setErrorMessage(
           'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!',
         );
       }
       if (!confirmValidation) {
         setIsLoading(false);
-        return setErrorMessage('Mật khẩu xác nhận không khớp!');
+        setErrorMessage('Mật khẩu xác nhận không khớp!');
       }
+
       try {
         const res = await authenticationAPI.HandleAuthentication(
           '/register',
-          values,
+          {username, email, password},
           'post',
         );
 
-        console.log('Đăng ký thành công:', res);
+        dispatch(addAuth(res.data))
+        await AsyncStorage.setItem('auth', JSON.stringify(res.data))
+        setIsLoading(false);
 
-        // if (res?.status === 200 || res?.success) {
-        //   // Hiển thị LoadingModal trong 1.5 giây rồi chuyển màn hình
+        // /** ✅ SỬA TẠI ĐÂY:
+        //  *  Trước: res?.success → ❌ vì không có 'success' trực tiếp trong res
+        //  *  Sau: res?.data?.success → ✅ vì success nằm trong res.data
+        //  */
+        // if (res?.status === 200 || res?.data?.success) {
         //   setTimeout(() => {
         //     setIsLoading(false);
         //     navigation.replace('HomeScreen');
         //   }, 1500);
         // } else {
         //   setIsLoading(false);
-        //   setErrorMessage(res?.message || 'Đăng ký thất bại!');
+        //   setErrorMessage(res?.data?.message || 'Đăng ký thất bại!');
         // }
+
       } catch (error) {
         console.log(error);
         setIsLoading(false);

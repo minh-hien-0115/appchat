@@ -6,7 +6,7 @@ export const appColors = {
     background: '#F2F2F7',        // Màu nền tổng thể sáng
     text1: '#000000',              // Màu chữ chính (đen)
     text: '#120D26',
-    white: '#fff',         // Màu chữ sáng (trắng) dùng trên nền tối
+    white: '#ffffff',         // Màu chữ sáng (trắng) dùng trên nền tối
     border: '#E1E1E1',            // Màu viền hoặc đường ngăn cách
     error: '#FF3B30',             // Màu cảnh báo lỗi
     success: '#4CD964',           // Màu thông báo thành công
