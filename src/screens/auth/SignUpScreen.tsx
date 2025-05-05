@@ -98,7 +98,6 @@ const SignUpScreen = ({navigation}: any) => {
       <ContainerComponents isImagesBackgournd isScroll back>
         <SectionComponents>
           <TextComponents size={24} title text="Sign up" />
-
           <SpaceComponents height={21} />
 
           <InputComponents
