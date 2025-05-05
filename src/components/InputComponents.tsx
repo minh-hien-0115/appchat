@@ -45,6 +45,7 @@ const InputComponents = (props: Props) => {
         secureTextEntry={isShowPass}
         placeholderTextColor={'#747688'}
         keyboardType={type ?? 'default'}
+        autoCapitalize="none"
       />
       {suffix ?? suffix}
       <TouchableOpacity
