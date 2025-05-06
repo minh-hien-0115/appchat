@@ -8,7 +8,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container} >
       <Text>HomeScreen</Text>
-      <Button title='LogOut' onPress={() => {dispatch(removeAuth({}))}} />
+      <Button title='Log Out' onPress={() => {dispatch(removeAuth({}))}} />
     </View>
   )
 }

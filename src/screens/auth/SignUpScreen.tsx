@@ -80,19 +80,19 @@ const SignUpScreen = ({navigation}: any) => {
         await AsyncStorage.setItem('auth', JSON.stringify(res.data))
         setIsLoading(false);
 
-        // /** ✅ SỬA TẠI ĐÂY:
-        //  *  Trước: res?.success → ❌ vì không có 'success' trực tiếp trong res
-        //  *  Sau: res?.data?.success → ✅ vì success nằm trong res.data
-        //  */
-        // if (res?.status === 200 || res?.data?.success) {
-        //   setTimeout(() => {
-        //     setIsLoading(false);
-        //     navigation.replace('HomeScreen');
-        //   }, 1500);
-        // } else {
-        //   setIsLoading(false);
-        //   setErrorMessage(res?.data?.message || 'Đăng ký thất bại!');
-        // }
+        /** ✅ SỬA TẠI ĐÂY:
+         *  Trước: res?.success → ❌ vì không có 'success' trực tiếp trong res
+         *  Sau: res?.data?.success → ✅ vì success nằm trong res.data
+         */
+        if (res?.status === 200 || res?.data?.success) {
+          setTimeout(() => {
+            setIsLoading(false);
+            navigation.replace('HomeScreen');
+          }, 1500);
+        } else {
+          setIsLoading(false);
+          setErrorMessage(res?.data?.message || 'Đăng ký thất bại!');
+        }
 
       } catch (error) {
         console.log(error);

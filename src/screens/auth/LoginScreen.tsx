@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}: any) => {
           'post',
         );
         dispatch(addAuth(res.data))
-        await AsyncStorage.setItem('auth', isRemember ? JSON.stringify(res.data) : email)
+        await AsyncStorage.setItem('auth', isRemember ? JSON.stringify(res.data) : email, );
       } catch (error) {
         console.log(error);
       }
@@ -89,6 +89,7 @@ const LoginScreen = ({navigation}: any) => {
               value={isRemember}
               onChange={() => setIsRemember(!isRemember)}
             />
+            <SpaceComponents width={4}/>
             <TextComponents text="Remember me" />
           </RowComponents>
           <ButtonComponents

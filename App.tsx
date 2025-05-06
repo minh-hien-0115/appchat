@@ -18,7 +18,6 @@ const App = () => {
           backgroundColor="transparent"
           translucent
         />
-
         <NavigationContainer>
           <AppRouters />
         </NavigationContainer>
