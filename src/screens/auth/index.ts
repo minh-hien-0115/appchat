@@ -1,8 +1,8 @@
 import ForgotPassword from "./ForgotPassword";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
-import Verication from "./Verication";
+import VerificationScreen from "./VerificationScreen";
 
 export {
-    LoginScreen, SignUpScreen, ForgotPassword, Verication
+    LoginScreen, SignUpScreen, ForgotPassword, VerificationScreen
 }

@@ -14,9 +14,9 @@ import {appColors} from '../../contants/appColors';
 import {ArrowRight, Lock, Sms, User} from 'iconsax-react-nativejs';
 import {LoadingModal} from '../../modals';
 import authenticationAPI from '../../api/authApi';
-import { Validate } from '../../utils/Validate';
-import { useDispatch } from 'react-redux';
-import { addAuth } from '../../redux/reducers/authReducer';
+import {Validate} from '../../utils/Validate';
+import {useDispatch} from 'react-redux';
+import {addAuth} from '../../redux/reducers/authReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initvalue = {
@@ -30,10 +30,15 @@ const SignUpScreen = ({navigation}: any) => {
   const [values, setValues] = useState(initvalue);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if ( values.username|| values.email || values.password || values.confirmPassword) {
+    if (
+      // values.username ||
+      values.email ||
+      values.password ||
+      values.confirmPassword
+    ) {
       setErrorMessage('');
     }
   }, [values.username, values.email, values.password, values.confirmPassword]);
@@ -45,64 +50,77 @@ const SignUpScreen = ({navigation}: any) => {
   };
 
   const handleRegister = async () => {
-    const {username, email, password, confirmPassword} = values;
+    const api = '/verification';
+    try {
+      const res = await authenticationAPI.HandleAuthentication(
+        api,
+        {email: values.email},
+        'post',
+      );
 
-    const emailValidation = Validate.email(email);
-    const passValidation = Validate.password(password);
-    const confirmValidation = password === confirmPassword;
-
-    if (email && password && confirmPassword) {
-      setErrorMessage('');
-      setIsLoading(true);
-      if (!emailValidation) {
-        setIsLoading(false);
-        setErrorMessage('Địa chỉ Email không hợp lệ, !');
-      }
-      if (!passValidation) {
-        setIsLoading(false);
-        setErrorMessage(
-          'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!',
-        );
-      }
-      if (!confirmValidation) {
-        setIsLoading(false);
-        setErrorMessage('Mật khẩu xác nhận không khớp!');
-      }
-
-      try {
-        const res = await authenticationAPI.HandleAuthentication(
-          '/register',
-          {username, email, password},
-          'post',
-        );
-
-        dispatch(addAuth(res.data))
-        await AsyncStorage.setItem('auth', JSON.stringify(res.data))
-        setIsLoading(false);
-
-        /** ✅ SỬA TẠI ĐÂY:
-         *  Trước: res?.success → ❌ vì không có 'success' trực tiếp trong res
-         *  Sau: res?.data?.success → ✅ vì success nằm trong res.data
-         */
-        if (res?.status === 200 || res?.data?.success) {
-          setTimeout(() => {
-            setIsLoading(false);
-            navigation.replace('HomeScreen');
-          }, 1500);
-        } else {
-          setIsLoading(false);
-          setErrorMessage(res?.data?.message || 'Đăng ký thất bại!');
-        }
-
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-        setErrorMessage('Có lỗi xảy ra khi đăng ký!');
-      }
-    } else {
-      setErrorMessage('Vui lòng nhập đầy đủ thông tin!');
+      navigation.navigate('VerificationScreen', {
+        code: res.data.code,
+        email: values.email,
+        password: values.password
+      })
+    } catch (error) {
+      console.log(error);
     }
   };
+  // const {username, email, password, confirmPassword} = values;
+
+  // const emailValidation = Validate.email(email);
+  // const passValidation = Validate.password(password);
+  // const confirmValidation = password === confirmPassword;
+
+  // if (email && password && confirmPassword) {
+  //   setErrorMessage('');
+  //   setIsLoading(true);
+  //   if (!emailValidation) {
+  //     setIsLoading(false);
+  //     setErrorMessage('Địa chỉ Email không hợp lệ, !');
+  //   }
+  //   if (!passValidation) {
+  //     setIsLoading(false);
+  //     setErrorMessage(
+  //       'Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt!',
+  //     );
+  //   }
+  //   if (!confirmValidation) {
+  //     setIsLoading(false);
+  //     setErrorMessage('Mật khẩu xác nhận không khớp!');
+  //   }
+
+  //   try {
+  //     const res = await authenticationAPI.HandleAuthentication(
+  //       '/register',
+  //       {username, email, password},
+  //       'post',
+  //     );
+
+  //     dispatch(addAuth(res.data))
+  //     await AsyncStorage.setItem('auth', JSON.stringify(res.data))
+  //     setIsLoading(false);
+
+  //     if (res?.status === 200 || res?.data?.success) {
+  //       setTimeout(() => {
+  //         setIsLoading(false);
+  //         navigation.replace('HomeScreen');
+  //       }, 2000);
+  //     } else {
+  //       setIsLoading(true);
+  //       setErrorMessage(res?.data?.message || 'Đăng ký thất bại!');
+  //     }
+
+  //   } catch (error) {
+  //     console.log(error);
+  //     setIsLoading(false);
+  //     setErrorMessage('Có lỗi xảy ra khi đăng ký!');
+  //   }
+  // } else {
+  //   setErrorMessage('Vui lòng nhập đầy đủ thông tin!');
+  // }
+  // };
 
   return (
     <>
