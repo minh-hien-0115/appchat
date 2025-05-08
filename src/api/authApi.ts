@@ -7,7 +7,7 @@ class AuthApi {
     data?: any,
     method?: 'get' | 'post' | 'put' | 'delete',
   ) => {
-    return await axiosClient(`${appInfor.BASE_URL}/auth${url}`, {
+    return await axiosClient(`/auth${url}`, { //${appInfor.BASE_URL}/auth
         method: method ?? 'get',
         data,
     })
