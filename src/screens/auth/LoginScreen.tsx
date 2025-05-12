@@ -115,7 +115,7 @@ const LoginScreen = ({navigation}: any) => {
 
       <SectionComponents>
         <ButtonComponents
-        disable={isDisable}
+          disable={isDisable}
           onPress={handleLogin}
           text="SIGN IN"
           type="primary"
